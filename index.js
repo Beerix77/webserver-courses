@@ -3,6 +3,9 @@ const express = require('express');
 
 const app = express();
 
+
+app.use(express.json()); // adding middleware
+
 /*
 app.get()
 app.post()
@@ -22,12 +25,12 @@ app.listen(PORT, () => {
 
 
 const courses = [
-  {id: 1, name: "Maths"},
+  {id: 1, name: "Math"},
   {id: 2, name: "Astrology"},
   {id: 3, name: "Chemistry"},
   {id: 4, name: "Physics"},
-  {id: 5, name: "Adv. Maths"}
-]
+  {id: 5, name: "Adv. Math"}
+];
 
 
 
@@ -38,9 +41,45 @@ app.get('/', (req, res) => {
 
 
 
+
+
+
+///////////////////////////////////////////////////////////////////////////
+
 app.get('/api/courses', (req, res) => {
-  res.send(courses);
-}); // GET '/api/courses'
+
+  //res.send(courses);
+  console.log(req.body.id);
+
+}); //GET '/api/courses'
+
+
+
+
+app.post('/api/courses', (req, res) => {
+
+  if (!req.body.name || req.body.name.length < 3) {
+    res.status(400).send('Name must be > 3 chars and is required.');
+    return;
+  }
+
+  const course = {
+    id: courses.length + 1,
+    name: req.body.name
+  };
+  courses.push(course);
+  res.send(course);
+
+}); //POST '/api/courses'
+
+
+/////////////////////////////////////////////////////////////
+
+
+
+
+
+
 
 
 //req.params.x is '/:x'
@@ -53,4 +92,7 @@ app.get('/api/courses/:id', (req, res) => {
   res.send(course);
 
 }); // GET '/api/courses'
+
+
+
 
