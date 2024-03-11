@@ -1,6 +1,6 @@
 
+//const Joi = require('joi'); //class
 const express = require('express');
-
 const app = express();
 
 
@@ -12,9 +12,6 @@ app.post()
 app.put()
 app.delete()
 */
-
-
-
 
 
 const PORT = process.env.PORT || 2226;
@@ -57,6 +54,14 @@ app.get('/api/courses', (req, res) => {
 
 
 app.post('/api/courses', (req, res) => {
+
+  // const schema = {
+  //   name: Joi.string().min(3).required()
+  // };
+
+  // const result = Joi.validate(req.body, schema);
+  // console.log(result);
+
 
   if (!req.body.name || req.body.name.length < 3) {
     res.status(400).send('Name must be > 3 chars and is required.');
